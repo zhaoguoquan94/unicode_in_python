@@ -296,41 +296,42 @@ Ivan Krstić
      - 数学符号
      - ...
 
-Unicode, the ideal
+Unicode,完美的化身
 ==================
 
+如果说 ASCII, UTF-8和其他字节表示的字符串是 "文本"的话...
 If ASCII, UTF-8, and other byte strings are "text" ...
 
 .. class:: incremental big
 
-    ...then Unicode is "text-ness";
+    ...那么Unicode就是组成文本之本源(译者无力翻译...给出原文自己领悟...If ASCII, UTF-8, and other byte strings are "text" ...then Unicode is "text-ness";
 
 .. class:: incremental huge
 
-    it is the abstract form of text
+    他是文本的一种抽象形式
 
 .. class:: handout
 
    - http://en.wikipedia.org/wiki/Platonic_idealism
 
-Unicode is a concept
+Unicode is a concept(概念,原则)
 ====================
 
 ==========  ===========
-**letter**  **Unicode Code Point**
+**字母**  **Unicode码点t**
 ć           \\u0107
 ==========  ===========
 
-- to save Unicode to disk you have to encode it
+- 想要把它保存在磁盘你需要对其进行编码
 
 ==========  ===========  ==========  =============
-Byte Encodings
+字节编码
 --------------------------------------------------
-**letter**  **UTF-8**    **UTF-16**  **Shift-JIS**
+**字母**  **UTF-8**    **UTF-16**  **Shift-JIS**
 ć           \\xc4\\x87   \\x07\\x01  \\x85\\xc9
 ==========  ===========  ==========  =============
 
-Unicode Transformation Format
+Unicode 转码
 =============================
 
 .. code-block:: python
@@ -347,11 +348,12 @@ UTF-8
 
 .. class:: incremental
 
-   - variable byte representation
-   - first 128 characters encoded just like ASCII
-   - 1 byte (8 bits) to 4 bytes per code point
 
-Unicode Transformation Format
+   - 变长字节表示
+   - 前128个字符与ASCII相同
+   - 每个字符可能由1-4字节表示
+
+Unicode 转码
 =============================
 
 .. code-block:: python
@@ -368,55 +370,54 @@ UTF-16
 
 .. class:: incremental
 
-   - variable byte representation
-   - 2 bytes (16 bits) to 4 bytes per code point
-   - optimized for languages residing in the 2 byte character range
+    - 变长字节表示
+    - 每个字符可能由2-4字节表示
+    - 为双字节表示范围内语言优化
 
-Unicode Transformation Format
+Unicode 转码
 =============================
 
 UTF-32
 ------
 
 .. class:: incremental
+  - 定长表示,速度最快
+  - 每个码点4个字节
+  - python不支持...
 
-   - fixed width byte representation, fastest
-   - 4 bytes (32 bits) per code point
-   - not supported in Python
-
-Unicode chart
+Unicode 码表
 =============
 
-Ian Albert's Unicode chart
+Ian Albert的Unicode码表
 --------------------------
 
 .. class:: incremental
 
-   - this guy decided to print the entire Unicode chart
-   - 1,114,112 code points
-   - 6 feet by 12 feet
-   - 22,017 × 42,807 pixels
+   - 这哥们确定把所有unicode码表打印到墙上
+   - 1,114,112 个码点
+   - 6英尺*12英尺
+   - 像素22,017 × 42,807
 
-Unicode chart
+Unicode 码表
 =============
 
 .. image:: images/unichart-printed.jpg
 
 .. class:: handout
 
-    Ian Albert's Unicode chart.  Says it only cost him $20 at Kinko's but he was pretty sure they rang him up wrong.
+    Ian Albert的 Unicode 码表. 他说这玩意花了20刀,但他确定铁定算错了
 
-Unicode chart 50 %
+Unicode 码表 50 %
 ==================
 
 .. image:: images/unichart-50.jpg
 
-Unicode chart 100 %
+Unicode 码表 100 %
 ===================
 
 .. image:: images/unichart-100.jpg
 
-Decoding text into Unicode
+把文本解码为unicode
 ==========================
 
 .. class:: incremental
@@ -424,8 +425,10 @@ Decoding text into Unicode
    - It's mostly automatic
    - this happens a lot in 3rd party modules
    - Python will try to decode it for you
-
-Python magic
+   - 几乎全自动
+   - 在许多第三方模块中经常使用
+   - Python会尝试为你解码
+Python 魔法
 ============
 
 .. code-block:: python
@@ -438,7 +441,7 @@ Python magic
     ...
     UnicodeEncodeError: 'ascii' codec can't encode character u'\u0107' in position 10: ordinal not in range(128)
 
-Python magic, revealed
+揭秘Python魔法
 ======================
 
 .. code-block:: python
@@ -454,17 +457,14 @@ Python magic, revealed
     ...
     UnicodeEncodeError: 'ascii' codec can't encode character u'\u0107' in position 10: ordinal not in range(128)
 
-Gasp!
+卧槽?!
 =====
 
 .. class:: center huge
 
-    THE DEFAULT
-    ENCODING FOR
-    PYTHON 2
-    IS ASCII
+    Python2的默认编码是ASCII!
 
-Just reset it?!
+能不能改掉默认编码?
 ===============
 
 .. code-block:: python
@@ -473,24 +473,26 @@ Just reset it?!
 
 .. class:: incremental
 
-    - can't I just put this in ``sitecustomize.py``?
-    - No!
-    - your code will not work on other Python installations
-    - more trouble than it's worth
 
-Solution
+    - 我就不能把这玩意放在``sitecustomize.py``中吗?(译者:这个文件为Python设置默认编码以令其能够往控制台等输出格式正确的编码)
+    - 不行!
+    - 你的代码在其他Python环境中就不能用了
+    - 要是改了带来的麻烦更多
+
+
+解决方案
 ========
 
 .. class:: incremental big
 
-    1. **Decode** early
-    2. **Unicode** everywhere
-    3. **Encode** late
+    1. **早解码(解码为unicode)**
+    2. **多用unicode**,在哪都这样
+    3. **晚编码(编码为其他编码格式)**
 
-1. Decode early
+1. 早解码
 ===============
 
-Decode to ``<type 'unicode'>`` ASAP
+解码到``<type 'unicode'>``,越早越好
 
 .. code-block:: python
 
@@ -505,9 +507,9 @@ Decode to ``<type 'unicode'>`` ASAP
 
 .. class:: handout
 
-    detects if object is a string and if so converts to unicode, if not already.
+    检测一个对象是否是字符串,如果是字符串却不是unicode,就把它转化成unicode
 
-2. Unicode everywhere
+2. 多用unicode
 =====================
 
 .. code-block:: python
@@ -519,10 +521,10 @@ Decode to ``<type 'unicode'>`` ASAP
     >>> to_unicode_or_bust(1234)
     1234
 
-3. Encode late
+3. 晚编码
 ==============
 
-Encode to ``<type 'str'>`` when you write to disk or **print**
+当你需要写磁盘或print时,现编码为``<type 'str'>``这种字节表示
 
 .. code-block:: python
 
@@ -530,7 +532,7 @@ Encode to ``<type 'str'>`` when you write to disk or **print**
     >>> f.write(ivan_uni.encode('utf-8'))
     >>> f.close()
 
-Shortcuts
+捷径
 =========
 
 codecs.open()
@@ -546,7 +548,7 @@ codecs.open()
     u'Ivan Krsti\u0107'
     >>> f.close()
 
-Shortcuts
+捷径
 =========
 
 codecs.open()
@@ -561,22 +563,23 @@ codecs.open()
     >>> f.write(ivan_uni)
     >>> f.close()
 
-Python 2 Unicode incompatibility
+Python 2 Unicode 不兼容性
 ================================
 
-- some 3rd party modules incompatible
+- 某些第三方模块不兼容unicode
 
-  - submit bugs!
+  - 报bug啊!
 
-- some builtin modules are incompatible
+- 某些内置模块不兼容unicode
 
   - csv
 
-Python 2 Unicode workarounds
+Python 2 Unicode 变通方案
 ============================
 
-- momentarily encode as UTF-8, then decode immediately
-- csv documentation shows you how to do this
+- 临时编码为UTF-8,然后立即解码回来
+- CSV文档教你这么做.
+
 
 .. code-block:: python
 
@@ -585,7 +588,7 @@ Python 2 Unicode workarounds
     >>> ivan_bytes.decode('utf-8')
     u'Ivan Krsti\u0107'
 
-The BOM
+BOM
 =======
 
 .. class:: incremental
