@@ -4,11 +4,11 @@
 =========================================
 
 :作者: Kumar McMillan
-:译者:赵国铨
+:译者: 赵国铨
 :地点: PyCon 2008, 芝加哥
 :URL: http://farmdev.com/talks/unicode/
 :Source: https://github.com/kumar303/unicode-in-python
-:Source:#TODO
+:Source: #TODO
 
 这是什么?
 ====================
@@ -23,7 +23,7 @@
 
    - 以前见过这个异常吗?
    - 见过这个异常并且解决了?
-   - 彻底却是一个烦人的错误
+   - 这的确是一个烦人的错误
 
 .. class:: handout
 
@@ -51,13 +51,13 @@ Python中为什么使用unicode
 
 .. class:: incremental
 
-   - handle non-English languages
-   - use 3rd party modules
-   - accept arbitrary text input
-   - you will love Unicode
-   - you will hate Unicode
+   - 处理非英文文本
+   - 使用第三方模块
+   - 接受任意编码格式的文字输入
+   - 你会很爱Unicode
+   - 你也会很讨厌Unicode
 
-Web application
+Web 应用
 ===============
 
 .. image:: images/text-lifecycle-web.png
@@ -68,10 +68,10 @@ Web application
 
         [form input] => [Python] => [HTML]
 
-    - accepts input as text
-    - writes text to an html file
+    - 接收输入文本
+    - 将输入写入html文件
 
-Interacting with a database
+与数据库交互
 ===========================
 
 .. image:: images/text-lifecycle-db.png
@@ -82,10 +82,10 @@ Interacting with a database
 
         [read from DB] => [Python] => [write to DB]
 
-    - accepts input as text
-    - writes text to the database
+    - 接收输入文本
+    - 将输入写入数据库
 
-Command line script
+命令行脚本
 ===================
 
 .. image:: images/text-lifecycle-script.png
@@ -96,10 +96,10 @@ Command line script
 
         [text files] => [Python] => [stdout]
 
-    - accepts input as text
-    - writes text to stdout or other files
+    - 接收输入文本
+    - 将输入写入标准输出或其他文件中
 
-Let's open a UTF-8 file
+让我们打开一个UTF-8文件
 =======================
 
 Ivan Krstić
@@ -114,12 +114,12 @@ Ivan Krstić
 
 .. class:: handout
 
-    - Ivan Krstić is the director of security architecture at OLPC
-    - pretend you opened this in a desktop text editor (nothing fancy like vi)
-      and you saved it in UTF-8 format.  This might not have been the default.
-    - now you are opening the file in Python
+    - Ivan Krstić 是OLPC的首席安全架构师
+    - 假设你在编辑器中打开了这个文件,并且用UTF-8格式(可能UTF-8并不是默认格式)保存
+    - 然后你在Python中打开了这个文件
 
-What is it?
+
+这是什么?
 ===========
 
 .. code-block:: python
@@ -131,11 +131,11 @@ What is it?
 
 .. class:: incremental
 
-   - a string of bytes!
-   - 1 byte = 8 bits
-   - A bit is either "0" or "1"
+   - 这是一串字节组成的字符串
+   - 1 字节 = 8 比特
+   - 1比特不是1就是0
 
-Text is encoded
+文字是被编码的
 ===============
 
 Ivan Krstić
@@ -147,33 +147,33 @@ Ivan Krstić
 
 .. class:: incremental
 
-   - This string is encoded in UTF-8 format
-   - An encoding is a set of rules that assign numeric values to each text character
-   - Notice the c with a hachek takes up 2 bytes
-   - Other encodings might represent ć differently
-   - Python stdlib supports over 100 encodings
+   - 这个字符串是UTF-8编码的
+   - 一种编码就是一种把数字分配给各个字符的一组规定(译者注:比如ASCII中把65分给字母A)
+   - 我们发现最后一个字符ć竟然占了两个字节
+   - 其他编码规则可能使用别的的数字来代表ć
+   - Python支持超过100处编码格式
 
 
 .. class:: handout
 
-    - c with a hachek is part of the Croatian language
-    - each encoding has its own byte representation of text
+    - ć属于克罗地亚语
+    - 同样一串文本,使用不同的编码规则就有不同的字节表示
 
-ASCII
+ASCII编码
 =====
 
 ===========  =====  =====  =====  ====
-**char**     I      v      a      n
-**hex**      \\x49  \\x76  \\x61  \\x6e
-**decimal**  73     118    97     110
+**char 字符**     I      v      a      n
+**hex 16进制**      \\x49  \\x76  \\x61  \\x6e
+**decimal 10进制**  73     118    97     110
 ===========  =====  =====  =====  ====
 
 .. class:: incremental
 
-   - UTF-8 is an extension of ASCII
-   - created in 1963 as the **American** Standard Code for Information Interchange
-   - each character is 1 byte
-   - 128 possible characters
+   - UTF-8 是 ASCII的扩展
+   - ASCII发布于1963,是美国信息流通的标准编码格式
+   - 每一个字母由一个字节表示
+   - 共有128种不同的字符
 
 ASCII
 =====
@@ -186,10 +186,10 @@ ASCII
 
 .. class:: incremental
 
-   - ć cannot be encoded as ASCII
-   - d'oh!
+   - ć 不能使用ASCII编码
+   - ...
 
-built-in string types
+内置string类型
 =====================
 
 (Python 2)
@@ -215,10 +215,10 @@ u.encode(*encoding*)
 
 - ``<type 'unicode'>`` to ``<type 'str'>``
 
-The problem
+问题
 ===========
 
-Can't my Python text remain encoded?
+Python中的文本就不能一直保持编码好的状态吗?
 
 Ivan Krstić
 -----------
@@ -233,15 +233,14 @@ Ivan Krstić
     '\x87'
 
 .. class:: handout
+    - 编码好的文本用起来足够方便吗?要是一直使用编码好的,就不会出现各种解码错误了...
+    - 可是...这样的话,"Ivan Krstić"这串文本的长度真的是12吗?
 
-    - isn't encoded text good enough?  No decoding errors anywhere
-    - is the length of Ivan Krstić really 12?
+      - 如果使用其他编码格式会有不一样的结果吗
 
-      - what happens if the text were encoded differently?
+    - 这串字符最后一个字母真的是十六进制的87(字母W)吗?我想要的不是"ć"吗?
 
-    - is the last character really hexadecimal 87?  Is that what I wanted?
-
-Unicode is more accurate
+Unicode 在更多情况下更为"准确"
 ========================
 
 Ivan Krstić
@@ -257,7 +256,7 @@ Ivan Krstić
     >>> type(ivan_uni)
     <type 'unicode'>
 
-Unicode is more accurate
+Unicode 在更多情况下更为"准确"
 ========================
 
 Ivan Krstić
@@ -272,7 +271,7 @@ Ivan Krstić
     >>> ivan_uni[-1]
     u'\u0107'
 
-Unicode, what is it?
+什么是Unicode
 ====================
 
 .. code-block:: python
@@ -281,20 +280,21 @@ Unicode, what is it?
 
 .. class:: incremental
 
-   - a way to represent text without bytes
-   - unique number (code point) for each character of every language
-   - supports all major languages written today
-   - defines over 1 million code points
+   - 是一种与字节编码无关的表示文字的方法
+   - 全部语言的所有字符都有唯一确定的码点(Code Point)表示
+   - 支持当今所有常用语言
+   - 定义了超过一百万的字符以及对应的码点
+
 
 .. class:: handout
 
-   - supports...
+   - 支持...
 
-     - European alphabets
-     - Middle Eastern right-to-left
-     - scripts of Asia
-     - technical math symbols
-     - et cetera
+     - 欧洲大多数国家和中东一些地区使用的语言
+     - 中东地区从右向左的语言
+     - 亚洲的各种语言
+     - 数学符号
+     - ...
 
 Unicode, the ideal
 ==================
