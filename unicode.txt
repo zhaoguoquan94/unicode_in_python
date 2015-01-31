@@ -8,7 +8,7 @@
 :地点: PyCon 2008, 芝加哥
 :URL: http://farmdev.com/talks/unicode/
 :Source: https://github.com/kumar303/unicode-in-python
-:Source: #TODO
+:Source: https://github.com/zhaoguoquan94/unicode_in_python
 
 这是什么?
 ====================
@@ -22,7 +22,7 @@
 .. class:: incremental
 
    - 以前见过这个异常吗?
-   - 见过这个异常并且解决了?
+   - 以前见过这个异常并且解决了这个问题?
    - 这的确是一个烦人的错误
 
 .. class:: handout
@@ -55,7 +55,7 @@ Python中为什么使用unicode
    - 使用第三方模块
    - 接受任意编码格式的文字输入
    - 你会很爱Unicode
-   - 你也会很讨厌Unicode
+   - 不会用的话,你也会很讨厌Unicode
 
 Web 应用
 ===============
@@ -104,6 +104,7 @@ Web 应用
 
 Ivan Krstić
 -----------
+上面的就是文件内容
 
 .. code-block:: python
 
@@ -119,8 +120,10 @@ Ivan Krstić
     - 然后你在Python中打开了这个文件
 
 
-这是什么?
-===========
+
+这是什么类型?
+=================
+
 
 .. code-block:: python
 
@@ -148,7 +151,7 @@ Ivan Krstić
 .. class:: incremental
 
    - 这个字符串是UTF-8编码的
-   - 一种编码就是一种把数字分配给各个字符的一组规定(译者注:比如ASCII中把65分给字母A)
+   - 一种编码就是一种把数字分配给各个字符的一组规定(译者注:比如ASCII中把65分给字母A,则见到65就认为出现了字母A)
    - 我们发现最后一个字符ć竟然占了两个字节
    - 其他编码规则可能使用别的的数字来代表ć
    - Python支持超过100处编码格式
@@ -160,12 +163,13 @@ Ivan Krstić
     - 同样一串文本,使用不同的编码规则就有不同的字节表示
 
 ASCII编码
-=====
+====================
+
 
 ===========  =====  =====  =====  ====
-**char 字符**     I      v      a      n
-**hex 16进制**      \\x49  \\x76  \\x61  \\x6e
-**decimal 10进制**  73     118    97     110
+**char**     I      v      a      n
+**hex**      \\x49  \\x76  \\x61  \\x6e
+**decimal**  73     118    97     110
 ===========  =====  =====  =====  ====
 
 .. class:: incremental
@@ -202,18 +206,18 @@ ASCII
        |
        +--<type 'unicode'>
 
-Important methods
+几个重要的方法
 =================
 
 s.decode(*encoding*)
 --------------------
 
-- ``<type 'str'>`` to ``<type 'unicode'>``
+- 把``<type 'str'>`` 解码为 ``<type 'unicode'>``
 
 u.encode(*encoding*)
 --------------------
 
-- ``<type 'unicode'>`` to ``<type 'str'>``
+- 把``<type 'unicode'>`` 编码为 ``<type 'str'>``
 
 问题
 ===========
@@ -233,6 +237,7 @@ Ivan Krstić
     '\x87'
 
 .. class:: handout
+
     - 编码好的文本用起来足够方便吗?要是一直使用编码好的,就不会出现各种解码错误了...
     - 可是...这样的话,"Ivan Krstić"这串文本的长度真的是12吗?
 
@@ -241,7 +246,7 @@ Ivan Krstić
     - 这串字符最后一个字母真的是十六进制的87(字母W)吗?我想要的不是"ć"吗?
 
 Unicode 在更多情况下更为"准确"
-========================
+===================================
 
 Ivan Krstić
 -----------
@@ -257,7 +262,7 @@ Ivan Krstić
     <type 'unicode'>
 
 Unicode 在更多情况下更为"准确"
-========================
+=====================================
 
 Ivan Krstić
 -----------
@@ -300,11 +305,10 @@ Unicode,完美的化身
 ==================
 
 如果说 ASCII, UTF-8和其他字节表示的字符串是 "文本"的话...
-If ASCII, UTF-8, and other byte strings are "text" ...
 
 .. class:: incremental big
 
-    ...那么Unicode就是组成文本之本源(译者无力翻译...给出原文自己领悟...If ASCII, UTF-8, and other byte strings are "text" ...then Unicode is "text-ness";
+    那么Unicode就是组成文本之本源(译者无力翻译...给出原文自己领悟...If ASCII, UTF-8, and other byte strings are "text" ...then Unicode is "text-ness";
 
 .. class:: incremental huge
 
@@ -315,19 +319,19 @@ If ASCII, UTF-8, and other byte strings are "text" ...
    - http://en.wikipedia.org/wiki/Platonic_idealism
 
 Unicode is a concept(概念,原则)
-====================
+===================================================
 
-==========  ===========
-**字母**  **Unicode码点t**
+==========  =================
+**字母**     **Unicode码点**
 ć           \\u0107
-==========  ===========
+==========  =================
 
 - 想要把它保存在磁盘你需要对其进行编码
 
 ==========  ===========  ==========  =============
-字节编码
+Byte Encodings
 --------------------------------------------------
-**字母**  **UTF-8**    **UTF-16**  **Shift-JIS**
+**letter**  **UTF-8**    **UTF-16**  **Shift-JIS**
 ć           \\xc4\\x87   \\x07\\x01  \\x85\\xc9
 ==========  ===========  ==========  =============
 
@@ -381,6 +385,7 @@ UTF-32
 ------
 
 .. class:: incremental
+
   - 定长表示,速度最快
   - 每个码点4个字节
   - python不支持...
@@ -393,13 +398,13 @@ Ian Albert的Unicode码表
 
 .. class:: incremental
 
-   - 这哥们确定把所有unicode码表打印到墙上
+   - 这哥们把所有unicode码表打印到墙上
    - 1,114,112 个码点
    - 6英尺*12英尺
    - 像素22,017 × 42,807
 
 Unicode 码表
-=============
+=============================
 
 .. image:: images/unichart-printed.jpg
 
@@ -408,28 +413,27 @@ Unicode 码表
     Ian Albert的 Unicode 码表. 他说这玩意花了20刀,但他确定铁定算错了
 
 Unicode 码表 50 %
-==================
+===================================
 
 .. image:: images/unichart-50.jpg
 
 Unicode 码表 100 %
-===================
+==========================================
 
 .. image:: images/unichart-100.jpg
 
 把文本解码为unicode
-==========================
+============================================
 
 .. class:: incremental
 
-   - It's mostly automatic
-   - this happens a lot in 3rd party modules
-   - Python will try to decode it for you
+
    - 几乎全自动
    - 在许多第三方模块中经常使用
    - Python会尝试为你解码
+
 Python 魔法
-============
+==================
 
 .. code-block:: python
 
@@ -442,7 +446,7 @@ Python 魔法
     UnicodeEncodeError: 'ascii' codec can't encode character u'\u0107' in position 10: ordinal not in range(128)
 
 揭秘Python魔法
-======================
+=============================================
 
 .. code-block:: python
 
@@ -458,14 +462,14 @@ Python 魔法
     UnicodeEncodeError: 'ascii' codec can't encode character u'\u0107' in position 10: ordinal not in range(128)
 
 卧槽?!
-=====
+=========================================
 
 .. class:: center huge
 
     Python2的默认编码是ASCII!
 
 能不能改掉默认编码?
-===============
+===============================================
 
 .. code-block:: python
 
@@ -474,7 +478,7 @@ Python 魔法
 .. class:: incremental
 
 
-    - 我就不能把这玩意放在``sitecustomize.py``中吗?(译者:这个文件为Python设置默认编码以令其能够往控制台等输出格式正确的编码)
+    - 我就不能把这玩意放在``sitecustomize.py``中吗?(译者:这个文件是Python设置默认编码以令其能够往控制台等输出格式正确的编码的文件)
     - 不行!
     - 你的代码在其他Python环境中就不能用了
     - 要是改了带来的麻烦更多
@@ -490,7 +494,7 @@ Python 魔法
     3. **晚编码(编码为其他编码格式)**
 
 1. 早解码
-===============
+========================================
 
 解码到``<type 'unicode'>``,越早越好
 
@@ -510,7 +514,7 @@ Python 魔法
     检测一个对象是否是字符串,如果是字符串却不是unicode,就把它转化成unicode
 
 2. 多用unicode
-=====================
+=========================================
 
 .. code-block:: python
 
@@ -564,7 +568,7 @@ codecs.open()
     >>> f.close()
 
 Python 2 Unicode 不兼容性
-================================
+===============================================
 
 - 某些第三方模块不兼容unicode
 
@@ -575,7 +579,7 @@ Python 2 Unicode 不兼容性
   - csv
 
 Python 2 Unicode 变通方案
-============================
+===============================================
 
 - 临时编码为UTF-8,然后立即解码回来
 - CSV文档教你这么做.
@@ -593,18 +597,18 @@ BOM
 
 .. class:: incremental
 
-    - sometimes at beginning of files
-    - Byte Order Mark
-    - essential for UTF-16, UTF-32 files
+    - 有时出现在文件的头部
+    - 字节顺序标志
+    - 对UTF-16, UTF-32编码的文件尤其重要
 
-      - Big Endian (MSB first)
-      - Little Endian (LSB first)
+      - 大端法Big Endian (高位在前)
+      - 小短法Little Endian (低位在前)
 
-    - UTF-8 BOM just says "I am UTF-8"
+    - UTF-8 BOM 就是告诉你一下:"我是UTF-8文件"
 
-      - popular in Windows
+      - Windows中很流行
 
-Detecting the BOM
+检测BOM
 =================
 
 .. code-block:: python
@@ -614,9 +618,9 @@ Detecting the BOM
     >>> sample
     '\xff\xfeI\x00'
 
-- BOM can be 2, 3, or 4 bytes long
+- BOM 可能有 2, 3,或 4 bytes 长
 
-Detecting the BOM
+检测BOM
 =================
 
 .. code-block:: python
@@ -629,87 +633,86 @@ Detecting the BOM
     >>> sample.startswith(codecs.BOM_UTF8)
     False
 
-Do I have to remove the BOM?
+我需要删掉BOM吗
 ============================
 
 .. class:: incremental
 
-    - maybe
-    - decoding UTF-16 removes the BOM automatically
-    - but not UTF-8
+    - 也许吧
+    - 解码UTF-16时自动删掉BOM
+    - 但UTF-8不是这样
 
-      - *unless* you say ``s.decode('utf-8-sig')``
+      - *除非* 你这么写 ``s.decode('utf-8-sig')``
 
-        - available since Python 2.5
+        - Python 2.5及以后都是这样
 
-How do you guess an encoding?
-=============================
+给你一段字节,如何判断其编码?
+========================================
 
 .. class:: incremental
 
-    - There is no reliable way to guess an encoding
-    - BOM gives you a clue
-    - ``Content-type`` header usually contains ``charset=...``
-    - chardet module tries
-
+    - 不幸的是,没有一个可靠的方法能这么做
+    - BOM给你了线索
+    - HTTP传输中的``Content-type``头一般会告诉你使用了哪个字符集,就像"charset=..."
+    - 有专门判断字符编码的模块
       - http://chardet.feedparser.org/
-      - port of Mozilla encoding detection
+      - 是Mozilla编码检测的一部分(原文port of Mozilla encoding detection)
 
-    - UTF-8 is your best guess
 
-Summary of problems
-===================
+总结问题
+======================
 
 .. class:: incremental
 
-    - default Python 2 encoding is 'ascii'
-    - files might contain a BOM
-    - not all Python 2 internals support Unicode
-    - You can't reliably guess an encoding
+    - Python 2默认编码是ASCII
+    - 文件可能包含一个BOM头
+    - 并不是所有的Python 2 内部模块支持Unicode
+    - 无法可靠判断一串字符的编码格式
 
-Summary of solutions
+总结问题
 ====================
 
 .. class:: incremental
 
-    - Decode early, Unicode everywhere, encode late
-    - write wrappers for modules that don't like Unicode
-    - Always put Unicode in unit tests
-    - UTF-8 is the best guess for an encoding
+    - 早解码,多用unicode,晚编码
+    - 封装那些不支持unicode的模块,自己搞定
+    - 单元测试不要少了unicode
+    - 要是猜测编码格式,先猜UTF-8
 
-      - use the BOM to guess encodings
-      - or use chardet.detect()
+      - 使用BOM头检测编码格式
+      - 或者使用专业模块chardet.detect()
 
-Unicode in Python 3
+Python 3中的Unicode
 ===================
 
 .. class:: incremental
 
-    - they fixed Unicode!
-    - ``<type 'str'>`` is a Unicode object
-    - separate ``<type 'bytes'>`` type
-    - all builtin modules support Unicode
-    - no more ``u'text'`` syntax
+    - 解决了Python2中存在的unicode的问题!
+    - ``<type 'str'>`` 就是一个unicode对象
+    - 分离开了 ``<type 'bytes'>`` 类型
+    - 所有内置模块都支持Unicode
+    - 不再使用``u'text'`` 这个语法
 
-Unicode in Python 3
-===================
+Python 3中的Unicode
+===============================
 
 .. class:: incremental
 
-    - ``open()`` takes an encoding argument, like ``codecs.open()``
-    - default encoding is UTF-8 not ASCII
+    - ``open()`` 接受一个编码参数, 就像 ``codecs.open()``
+    - 默认编码格式是UTF-8 而非 ASCII
 
       - woo!
 
-    - Tries to guess the file encoding
+    - 依旧需要猜测文件编码格式
 
-      - You will still need to declare encodings
+      - 依旧需要声明编码格式
 
 Fin
 ===
 
 .. class:: incremental
 
+    - 谢谢!
     - Thanks Leapfrog Online
     - Stop by our booth...
 

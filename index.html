@@ -384,7 +384,7 @@ ul.auto-toc {
 </tr>
 <tr class="field"><th class="docinfo-name">Source:</th><td class="field-body"><a class="reference external" href="https://github.com/kumar303/unicode-in-python">https://github.com/kumar303/unicode-in-python</a></td>
 </tr>
-<tr class="field"><th class="docinfo-name">Source:</th><td class="field-body">#TODO</td>
+<tr class="field"><th class="docinfo-name">Source:</th><td class="field-body"><a class="reference external" href="https://github.com/zhaoguoquan94/unicode_in_python">https://github.com/zhaoguoquan94/unicode_in_python</a></td>
 </tr>
 </tbody>
 </table>
@@ -399,7 +399,7 @@ can't decode byte 0xc4 in position
 </pre>
 <ul class="incremental simple">
 <li>以前见过这个异常吗?</li>
-<li>见过这个异常并且解决了?</li>
+<li>以前见过这个异常并且解决了这个问题?</li>
 <li>这的确是一个烦人的错误</li>
 </ul>
 <ul class="handout simple">
@@ -431,7 +431,7 @@ can't decode byte 0xc4 in position
 <li>使用第三方模块</li>
 <li>接受任意编码格式的文字输入</li>
 <li>你会很爱Unicode</li>
-<li>你会很讨厌Unicode</li>
+<li>不会用的话,你也会很讨厌Unicode</li>
 </ul>
 </div>
 <div class="slide" id="web">
@@ -471,6 +471,7 @@ can't decode byte 0xc4 in position
 <h1>让我们打开一个UTF-8文件</h1>
 <div class="section" id="ivan-krstic">
 <h2>Ivan Krstić</h2>
+<p>上面的就是文件内容</p>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">&gt;&gt;&gt;</span> f <span style="color: #666666">=</span> <span style="color: #008000">open</span>(<span style="color: #BA2121">&#39;/tmp/ivan_utf8.txt&#39;</span>, <span style="color: #BA2121">&#39;r&#39;</span>)
 <span style="color: #666666">&gt;&gt;&gt;</span> ivan_utf8 <span style="color: #666666">=</span> f<span style="color: #666666">.</span>read()
 <span style="color: #666666">&gt;&gt;&gt;</span> ivan_utf8
@@ -484,7 +485,7 @@ can't decode byte 0xc4 in position
 </div>
 </div>
 <div class="slide" id="id6">
-<h1>这是什么?</h1>
+<h1>这是什么类型?</h1>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">&gt;&gt;&gt;</span> ivan_utf8
 <span style="color: #BA2121">&#39;Ivan Krsti</span><span style="color: #BB6622; font-weight: bold">\xc4\x87</span><span style="color: #BA2121">&#39;</span>
 <span style="color: #666666">&gt;&gt;&gt;</span> <span style="color: #008000">type</span>(ivan_utf8)
@@ -503,20 +504,20 @@ can't decode byte 0xc4 in position
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #BA2121">&#39;Ivan Krsti</span><span style="color: #BB6622; font-weight: bold">\xc4\x87</span><span style="color: #BA2121">&#39;</span>
 </pre></div>
 <ul class="incremental simple">
-<li>This string is encoded in UTF-8 format</li>
-<li>An encoding is a set of rules that assign numeric values to each text character</li>
-<li>Notice the c with a hachek takes up 2 bytes</li>
-<li>Other encodings might represent ć differently</li>
-<li>Python stdlib supports over 100 encodings</li>
+<li>这个字符串是UTF-8编码的</li>
+<li>一种编码就是一种把数字分配给各个字符的一组规定(译者注:比如ASCII中把65分给字母A,则见到65就认为出现了字母A)</li>
+<li>我们发现最后一个字符ć竟然占了两个字节</li>
+<li>其他编码规则可能使用别的的数字来代表ć</li>
+<li>Python支持超过100处编码格式</li>
 </ul>
 <ul class="handout simple">
-<li>c with a hachek is part of the Croatian language</li>
-<li>each encoding has its own byte representation of text</li>
+<li>ć属于克罗地亚语</li>
+<li>同样一串文本,使用不同的编码规则就有不同的字节表示</li>
 </ul>
 </div>
 </div>
 <div class="slide" id="ascii">
-<h1>ASCII</h1>
+<h1>ASCII编码</h1>
 <table border="1" class="docutils">
 <colgroup>
 <col width="35%" />
@@ -547,10 +548,10 @@ can't decode byte 0xc4 in position
 </tbody>
 </table>
 <ul class="incremental simple">
-<li>UTF-8 is an extension of ASCII</li>
-<li>created in 1963 as the <strong>American</strong> Standard Code for Information Interchange</li>
-<li>each character is 1 byte</li>
-<li>128 possible characters</li>
+<li>UTF-8 是 ASCII的扩展</li>
+<li>ASCII发布于1963,是美国信息流通的标准编码格式</li>
+<li>每一个字母由一个字节表示</li>
+<li>共有128种不同的字符</li>
 </ul>
 </div>
 <div class="slide" id="id9">
@@ -593,12 +594,12 @@ can't decode byte 0xc4 in position
 </tbody>
 </table>
 <ul class="incremental simple">
-<li>ć cannot be encoded as ASCII</li>
-<li>d'oh!</li>
+<li>ć 不能使用ASCII编码</li>
+<li>...</li>
 </ul>
 </div>
-<div class="slide" id="built-in-string-types">
-<h1>built-in string types</h1>
+<div class="slide" id="string">
+<h1>内置string类型</h1>
 <p>(Python 2)</p>
 <pre class="literal-block">
 &lt;type 'basestring'&gt;
@@ -608,25 +609,25 @@ can't decode byte 0xc4 in position
    +--&lt;type 'unicode'&gt;
 </pre>
 </div>
-<div class="slide" id="important-methods">
-<h1>Important methods</h1>
+<div class="slide" id="id10">
+<h1>几个重要的方法</h1>
 <div class="section" id="s-decode-encoding">
 <h2>s.decode(<em>encoding</em>)</h2>
 <ul class="simple">
-<li><tt class="docutils literal">&lt;type 'str'&gt;</tt> to <tt class="docutils literal">&lt;type 'unicode'&gt;</tt></li>
+<li>把``&lt;type 'str'&gt;`` 解码为 <tt class="docutils literal">&lt;type 'unicode'&gt;</tt></li>
 </ul>
 </div>
 <div class="section" id="u-encode-encoding">
 <h2>u.encode(<em>encoding</em>)</h2>
 <ul class="simple">
-<li><tt class="docutils literal">&lt;type 'unicode'&gt;</tt> to <tt class="docutils literal">&lt;type 'str'&gt;</tt></li>
+<li>把``&lt;type 'unicode'&gt;`` 编码为 <tt class="docutils literal">&lt;type 'str'&gt;</tt></li>
 </ul>
 </div>
 </div>
-<div class="slide" id="the-problem">
-<h1>The problem</h1>
-<p>Can't my Python text remain encoded?</p>
-<div class="section" id="id10">
+<div class="slide" id="id11">
+<h1>问题</h1>
+<p>Python中的文本就不能一直保持编码好的状态吗?</p>
+<div class="section" id="id12">
 <h2>Ivan Krstić</h2>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">&gt;&gt;&gt;</span> ivan_utf8
 <span style="color: #BA2121">&#39;Ivan Krsti</span><span style="color: #BB6622; font-weight: bold">\xc4\x87</span><span style="color: #BA2121">&#39;</span>
@@ -636,18 +637,18 @@ can't decode byte 0xc4 in position
 <span style="color: #BA2121">&#39;</span><span style="color: #BB6622; font-weight: bold">\x87</span><span style="color: #BA2121">&#39;</span>
 </pre></div>
 <ul class="handout simple">
-<li>isn't encoded text good enough?  No decoding errors anywhere</li>
-<li>is the length of Ivan Krstić really 12?<ul>
-<li>what happens if the text were encoded differently?</li>
+<li>编码好的文本用起来足够方便吗?要是一直使用编码好的,就不会出现各种解码错误了...</li>
+<li>可是...这样的话,&quot;Ivan Krstić&quot;这串文本的长度真的是12吗?<ul>
+<li>如果使用其他编码格式会有不一样的结果吗</li>
 </ul>
 </li>
-<li>is the last character really hexadecimal 87?  Is that what I wanted?</li>
+<li>这串字符最后一个字母真的是十六进制的87(字母W)吗?我想要的不是&quot;ć&quot;吗?</li>
 </ul>
 </div>
 </div>
-<div class="slide" id="unicode-is-more-accurate">
-<h1>Unicode is more accurate</h1>
-<div class="section" id="id11">
+<div class="slide" id="unicode">
+<h1>Unicode 在更多情况下更为&quot;准确&quot;</h1>
+<div class="section" id="id13">
 <h2>Ivan Krstić</h2>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">&gt;&gt;&gt;</span> ivan_utf8
 <span style="color: #BA2121">&#39;Ivan Krsti</span><span style="color: #BB6622; font-weight: bold">\xc4\x87</span><span style="color: #BA2121">&#39;</span>
@@ -659,9 +660,9 @@ can't decode byte 0xc4 in position
 </pre></div>
 </div>
 </div>
-<div class="slide" id="id12">
-<h1>Unicode is more accurate</h1>
-<div class="section" id="id13">
+<div class="slide" id="id14">
+<h1>Unicode 在更多情况下更为&quot;准确&quot;</h1>
+<div class="section" id="id15">
 <h2>Ivan Krstić</h2>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">&gt;&gt;&gt;</span> ivan_uni
 <span style="color: #BA2121">u&#39;Ivan Krsti</span><span style="color: #BB6622; font-weight: bold">\u0107</span><span style="color: #BA2121">&#39;</span>
@@ -672,46 +673,46 @@ can't decode byte 0xc4 in position
 </pre></div>
 </div>
 </div>
-<div class="slide" id="unicode-what-is-it">
-<h1>Unicode, what is it?</h1>
+<div class="slide" id="id16">
+<h1>什么是Unicode</h1>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #BA2121">u&#39;Ivan Krsti</span><span style="color: #BB6622; font-weight: bold">\u0107</span><span style="color: #BA2121">&#39;</span>
 </pre></div>
 <ul class="incremental simple">
-<li>a way to represent text without bytes</li>
-<li>unique number (code point) for each character of every language</li>
-<li>supports all major languages written today</li>
-<li>defines over 1 million code points</li>
+<li>是一种与字节编码无关的表示文字的方法</li>
+<li>全部语言的所有字符都有唯一确定的码点(Code Point)表示</li>
+<li>支持当今所有常用语言</li>
+<li>定义了超过一百万的字符以及对应的码点</li>
 </ul>
 <ul class="handout simple">
-<li>supports...<ul>
-<li>European alphabets</li>
-<li>Middle Eastern right-to-left</li>
-<li>scripts of Asia</li>
-<li>technical math symbols</li>
-<li>et cetera</li>
+<li>支持...<ul>
+<li>欧洲大多数国家和中东一些地区使用的语言</li>
+<li>中东地区从右向左的语言</li>
+<li>亚洲的各种语言</li>
+<li>数学符号</li>
+<li>...</li>
 </ul>
 </li>
 </ul>
 </div>
-<div class="slide" id="unicode-the-ideal">
-<h1>Unicode, the ideal</h1>
-<p>If ASCII, UTF-8, and other byte strings are &quot;text&quot; ...</p>
-<p class="incremental big">...then Unicode is &quot;text-ness&quot;;</p>
-<p class="incremental huge">it is the abstract form of text</p>
+<div class="slide" id="id17">
+<h1>Unicode,完美的化身</h1>
+<p>如果说 ASCII, UTF-8和其他字节表示的字符串是 &quot;文本&quot;的话...</p>
+<p class="incremental big">那么Unicode就是组成文本之本源(译者无力翻译...给出原文自己领悟...If ASCII, UTF-8, and other byte strings are &quot;text&quot; ...then Unicode is &quot;text-ness&quot;;</p>
+<p class="incremental huge">他是文本的一种抽象形式</p>
 <ul class="handout simple">
 <li><a class="reference external" href="http://en.wikipedia.org/wiki/Platonic_idealism">http://en.wikipedia.org/wiki/Platonic_idealism</a></li>
 </ul>
 </div>
 <div class="slide" id="unicode-is-a-concept">
-<h1>Unicode is a concept</h1>
+<h1>Unicode is a concept(概念,原则)</h1>
 <table border="1" class="docutils">
 <colgroup>
-<col width="31%" />
-<col width="69%" />
+<col width="37%" />
+<col width="63%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><strong>letter</strong></td>
-<td><strong>Unicode Code Point</strong></td>
+<tr><td><strong>字母</strong></td>
+<td><strong>Unicode码点</strong></td>
 </tr>
 <tr><td>ć</td>
 <td>\u0107</td>
@@ -719,7 +720,7 @@ can't decode byte 0xc4 in position
 </tbody>
 </table>
 <ul class="simple">
-<li>to save Unicode to disk you have to encode it</li>
+<li>想要把它保存在磁盘你需要对其进行编码</li>
 </ul>
 <table border="1" class="docutils">
 <colgroup>
@@ -744,24 +745,24 @@ can't decode byte 0xc4 in position
 </tbody>
 </table>
 </div>
-<div class="slide" id="unicode-transformation-format">
-<h1>Unicode Transformation Format</h1>
+<div class="slide" id="id18">
+<h1>Unicode 转码</h1>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">&gt;&gt;&gt;</span> ab <span style="color: #666666">=</span> <span style="color: #008000">unicode</span>(<span style="color: #BA2121">&#39;AB&#39;</span>)
 </pre></div>
-<div class="section" id="id14">
+<div class="section" id="id19">
 <h2>UTF-8</h2>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">&gt;&gt;&gt;</span> ab<span style="color: #666666">.</span>encode(<span style="color: #BA2121">&#39;utf-8&#39;</span>)
 <span style="color: #BA2121">&#39;AB&#39;</span>
 </pre></div>
 <ul class="incremental simple">
-<li>variable byte representation</li>
-<li>first 128 characters encoded just like ASCII</li>
-<li>1 byte (8 bits) to 4 bytes per code point</li>
+<li>变长字节表示</li>
+<li>前128个字符与ASCII相同</li>
+<li>每个字符可能由1-4字节表示</li>
 </ul>
 </div>
 </div>
-<div class="slide" id="id15">
-<h1>Unicode Transformation Format</h1>
+<div class="slide" id="id20">
+<h1>Unicode 转码</h1>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">&gt;&gt;&gt;</span> ab <span style="color: #666666">=</span> <span style="color: #008000">unicode</span>(<span style="color: #BA2121">&#39;AB&#39;</span>)
 </pre></div>
 <div class="section" id="utf-16">
@@ -770,58 +771,58 @@ can't decode byte 0xc4 in position
 <span style="color: #BA2121">&#39;</span><span style="color: #BB6622; font-weight: bold">\xff\xfe</span><span style="color: #BA2121">A</span><span style="color: #BB6622; font-weight: bold">\x00</span><span style="color: #BA2121">B</span><span style="color: #BB6622; font-weight: bold">\x00</span><span style="color: #BA2121">&#39;</span>
 </pre></div>
 <ul class="incremental simple">
-<li>variable byte representation</li>
-<li>2 bytes (16 bits) to 4 bytes per code point</li>
-<li>optimized for languages residing in the 2 byte character range</li>
+<li>变长字节表示</li>
+<li>每个字符可能由2-4字节表示</li>
+<li>为双字节表示范围内语言优化</li>
 </ul>
 </div>
 </div>
-<div class="slide" id="id16">
-<h1>Unicode Transformation Format</h1>
+<div class="slide" id="id21">
+<h1>Unicode 转码</h1>
 <div class="section" id="utf-32">
 <h2>UTF-32</h2>
 <ul class="incremental simple">
-<li>fixed width byte representation, fastest</li>
-<li>4 bytes (32 bits) per code point</li>
-<li>not supported in Python</li>
+<li>定长表示,速度最快</li>
+<li>每个码点4个字节</li>
+<li>python不支持...</li>
 </ul>
 </div>
 </div>
-<div class="slide" id="unicode-chart">
-<h1>Unicode chart</h1>
-<div class="section" id="ian-albert-s-unicode-chart">
-<h2>Ian Albert's Unicode chart</h2>
+<div class="slide" id="id22">
+<h1>Unicode 码表</h1>
+<div class="section" id="ian-albertunicode">
+<h2>Ian Albert的Unicode码表</h2>
 <ul class="incremental simple">
-<li>this guy decided to print the entire Unicode chart</li>
-<li>1,114,112 code points</li>
-<li>6 feet by 12 feet</li>
-<li>22,017 × 42,807 pixels</li>
+<li>这哥们把所有unicode码表打印到墙上</li>
+<li>1,114,112 个码点</li>
+<li>6英尺*12英尺</li>
+<li>像素22,017 × 42,807</li>
 </ul>
 </div>
 </div>
-<div class="slide" id="id17">
-<h1>Unicode chart</h1>
+<div class="slide" id="id23">
+<h1>Unicode 码表</h1>
 <img alt="images/unichart-printed.jpg" src="images/unichart-printed.jpg" />
-<p class="handout">Ian Albert's Unicode chart.  Says it only cost him $20 at Kinko's but he was pretty sure they rang him up wrong.</p>
+<p class="handout">Ian Albert的 Unicode 码表. 他说这玩意花了20刀,但他确定铁定算错了</p>
 </div>
-<div class="slide" id="unicode-chart-50">
-<h1>Unicode chart 50 %</h1>
+<div class="slide" id="unicode-50">
+<h1>Unicode 码表 50 %</h1>
 <img alt="images/unichart-50.jpg" src="images/unichart-50.jpg" />
 </div>
-<div class="slide" id="unicode-chart-100">
-<h1>Unicode chart 100 %</h1>
+<div class="slide" id="unicode-100">
+<h1>Unicode 码表 100 %</h1>
 <img alt="images/unichart-100.jpg" src="images/unichart-100.jpg" />
 </div>
-<div class="slide" id="decoding-text-into-unicode">
-<h1>Decoding text into Unicode</h1>
+<div class="slide" id="id24">
+<h1>把文本解码为unicode</h1>
 <ul class="incremental simple">
-<li>It's mostly automatic</li>
-<li>this happens a lot in 3rd party modules</li>
-<li>Python will try to decode it for you</li>
+<li>几乎全自动</li>
+<li>在许多第三方模块中经常使用</li>
+<li>Python会尝试为你解码</li>
 </ul>
 </div>
-<div class="slide" id="python-magic">
-<h1>Python magic</h1>
+<div class="slide" id="python">
+<h1>Python 魔法</h1>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">&gt;&gt;&gt;</span> ivan_uni
 <span style="color: #BA2121">u&#39;Ivan Krsti</span><span style="color: #BB6622; font-weight: bold">\u0107</span><span style="color: #BA2121">&#39;</span>
 <span style="color: #666666">&gt;&gt;&gt;</span> f <span style="color: #666666">=</span> <span style="color: #008000">open</span>(<span style="color: #BA2121">&#39;/tmp/ivan.txt&#39;</span>, <span style="color: #BA2121">&#39;w&#39;</span>)
@@ -831,8 +832,8 @@ Traceback (most recent call last):
 <span style="color: #D2413A; font-weight: bold">UnicodeEncodeError</span>: <span style="color: #BA2121">&#39;ascii&#39;</span> codec can<span style="color: #BA2121">&#39;t encode character u&#39;</span>\u0107<span style="color: #BA2121">&#39; in position 10: ordinal not in range(128)</span>
 </pre></div>
 </div>
-<div class="slide" id="python-magic-revealed">
-<h1>Python magic, revealed</h1>
+<div class="slide" id="id25">
+<h1>揭秘Python魔法</h1>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">&gt;&gt;&gt;</span> ivan_uni
 <span style="color: #BA2121">u&#39;Ivan Krsti</span><span style="color: #BB6622; font-weight: bold">\u0107</span><span style="color: #BA2121">&#39;</span>
 <span style="color: #666666">&gt;&gt;&gt;</span> f <span style="color: #666666">=</span> <span style="color: #008000">open</span>(<span style="color: #BA2121">&#39;/tmp/ivan.txt&#39;</span>, <span style="color: #BA2121">&#39;w&#39;</span>)
@@ -845,35 +846,32 @@ Traceback (most recent call last):
 <span style="color: #D2413A; font-weight: bold">UnicodeEncodeError</span>: <span style="color: #BA2121">&#39;ascii&#39;</span> codec can<span style="color: #BA2121">&#39;t encode character u&#39;</span>\u0107<span style="color: #BA2121">&#39; in position 10: ordinal not in range(128)</span>
 </pre></div>
 </div>
-<div class="slide" id="gasp">
-<h1>Gasp!</h1>
-<p class="center huge">THE DEFAULT
-ENCODING FOR
-PYTHON 2
-IS ASCII</p>
+<div class="slide" id="id26">
+<h1>卧槽?!</h1>
+<p class="center huge">Python2的默认编码是ASCII!</p>
 </div>
-<div class="slide" id="just-reset-it">
-<h1>Just reset it?!</h1>
+<div class="slide" id="id27">
+<h1>能不能改掉默认编码?</h1>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">sys<span style="color: #666666">.</span>setdefaultencoding(<span style="color: #BA2121">&#39;utf-8&#39;</span>)
 </pre></div>
 <ul class="incremental simple">
-<li>can't I just put this in <tt class="docutils literal">sitecustomize.py</tt>?</li>
-<li>No!</li>
-<li>your code will not work on other Python installations</li>
-<li>more trouble than it's worth</li>
+<li>我就不能把这玩意放在``sitecustomize.py``中吗?(译者:这个文件是Python设置默认编码以令其能够往控制台等输出格式正确的编码的文件)</li>
+<li>不行!</li>
+<li>你的代码在其他Python环境中就不能用了</li>
+<li>要是改了带来的麻烦更多</li>
 </ul>
 </div>
-<div class="slide" id="solution">
-<h1>Solution</h1>
+<div class="slide" id="id28">
+<h1>解决方案</h1>
 <ol class="incremental big arabic simple">
-<li><strong>Decode</strong> early</li>
-<li><strong>Unicode</strong> everywhere</li>
-<li><strong>Encode</strong> late</li>
+<li><strong>早解码(解码为unicode)</strong></li>
+<li><strong>多用unicode</strong>,在哪都这样</li>
+<li><strong>晚编码(编码为其他编码格式)</strong></li>
 </ol>
 </div>
-<div class="slide" id="decode-early">
-<h1>1. Decode early</h1>
-<p>Decode to <tt class="docutils literal">&lt;type 'unicode'&gt;</tt> ASAP</p>
+<div class="slide" id="id29">
+<h1>1. 早解码</h1>
+<p>解码到``&lt;type 'unicode'&gt;``,越早越好</p>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">&gt;&gt;&gt;</span> <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">to_unicode_or_bust</span>(
 <span style="color: #666666">...</span>         obj, encoding<span style="color: #666666">=</span><span style="color: #BA2121">&#39;utf-8&#39;</span>):
 <span style="color: #666666">...</span>     <span style="color: #008000; font-weight: bold">if</span> <span style="color: #008000">isinstance</span>(obj, <span style="color: #008000">basestring</span>):
@@ -883,10 +881,10 @@ IS ASCII</p>
 <span style="color: #666666">...</span>
 <span style="color: #666666">&gt;&gt;&gt;</span>
 </pre></div>
-<p class="handout">detects if object is a string and if so converts to unicode, if not already.</p>
+<p class="handout">检测一个对象是否是字符串,如果是字符串却不是unicode,就把它转化成unicode</p>
 </div>
-<div class="slide" id="unicode-everywhere">
-<h1>2. Unicode everywhere</h1>
+<div class="slide" id="id30">
+<h1>2. 多用unicode</h1>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">&gt;&gt;&gt;</span> to_unicode_or_bust(ivan_uni)
 <span style="color: #BA2121">u&#39;Ivan Krsti</span><span style="color: #BB6622; font-weight: bold">\u0107</span><span style="color: #BA2121">&#39;</span>
 <span style="color: #666666">&gt;&gt;&gt;</span> to_unicode_or_bust(ivan_utf8)
@@ -895,16 +893,16 @@ IS ASCII</p>
 <span style="color: #666666">1234</span>
 </pre></div>
 </div>
-<div class="slide" id="encode-late">
-<h1>3. Encode late</h1>
-<p>Encode to <tt class="docutils literal">&lt;type 'str'&gt;</tt> when you write to disk or <strong>print</strong></p>
+<div class="slide" id="id31">
+<h1>3. 晚编码</h1>
+<p>当你需要写磁盘或print时,现编码为``&lt;type 'str'&gt;``这种字节表示</p>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">&gt;&gt;&gt;</span> f <span style="color: #666666">=</span> <span style="color: #008000">open</span>(<span style="color: #BA2121">&#39;/tmp/ivan_out.txt&#39;</span>,<span style="color: #BA2121">&#39;wb&#39;</span>)
 <span style="color: #666666">&gt;&gt;&gt;</span> f<span style="color: #666666">.</span>write(ivan_uni<span style="color: #666666">.</span>encode(<span style="color: #BA2121">&#39;utf-8&#39;</span>))
 <span style="color: #666666">&gt;&gt;&gt;</span> f<span style="color: #666666">.</span>close()
 </pre></div>
 </div>
-<div class="slide" id="shortcuts">
-<h1>Shortcuts</h1>
+<div class="slide" id="id32">
+<h1>捷径</h1>
 <div class="section" id="codecs-open">
 <h2>codecs.open()</h2>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">&gt;&gt;&gt;</span> <span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">codecs</span>
@@ -917,9 +915,9 @@ IS ASCII</p>
 </pre></div>
 </div>
 </div>
-<div class="slide" id="id18">
-<h1>Shortcuts</h1>
-<div class="section" id="id19">
+<div class="slide" id="id33">
+<h1>捷径</h1>
+<div class="section" id="id34">
 <h2>codecs.open()</h2>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">&gt;&gt;&gt;</span> <span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">codecs</span>
 <span style="color: #666666">&gt;&gt;&gt;</span> f <span style="color: #666666">=</span> codecs<span style="color: #666666">.</span>open(<span style="color: #BA2121">&#39;/tmp/ivan_utf8.txt&#39;</span>, <span style="color: #BA2121">&#39;w&#39;</span>,
@@ -930,24 +928,24 @@ IS ASCII</p>
 </pre></div>
 </div>
 </div>
-<div class="slide" id="python-2-unicode-incompatibility">
-<h1>Python 2 Unicode incompatibility</h1>
+<div class="slide" id="python-2-unicode">
+<h1>Python 2 Unicode 不兼容性</h1>
 <ul class="simple">
-<li>some 3rd party modules incompatible<ul>
-<li>submit bugs!</li>
+<li>某些第三方模块不兼容unicode<ul>
+<li>报bug啊!</li>
 </ul>
 </li>
-<li>some builtin modules are incompatible<ul>
+<li>某些内置模块不兼容unicode<ul>
 <li>csv</li>
 </ul>
 </li>
 </ul>
 </div>
-<div class="slide" id="python-2-unicode-workarounds">
-<h1>Python 2 Unicode workarounds</h1>
+<div class="slide" id="id35">
+<h1>Python 2 Unicode 变通方案</h1>
 <ul class="simple">
-<li>momentarily encode as UTF-8, then decode immediately</li>
-<li>csv documentation shows you how to do this</li>
+<li>临时编码为UTF-8,然后立即解码回来</li>
+<li>CSV文档教你这么做.</li>
 </ul>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">&gt;&gt;&gt;</span> ivan_bytes <span style="color: #666666">=</span> ivan_uni<span style="color: #666666">.</span>encode(<span style="color: #BA2121">&#39;utf-8&#39;</span>)
 <span style="color: #666666">&gt;&gt;&gt;</span> <span style="color: #408080; font-style: italic"># do stuff</span>
@@ -955,35 +953,35 @@ IS ASCII</p>
 <span style="color: #BA2121">u&#39;Ivan Krsti</span><span style="color: #BB6622; font-weight: bold">\u0107</span><span style="color: #BA2121">&#39;</span>
 </pre></div>
 </div>
-<div class="slide" id="the-bom">
-<h1>The BOM</h1>
+<div class="slide" id="bom">
+<h1>BOM</h1>
 <ul class="incremental simple">
-<li>sometimes at beginning of files</li>
-<li>Byte Order Mark</li>
-<li>essential for UTF-16, UTF-32 files<ul>
-<li>Big Endian (MSB first)</li>
-<li>Little Endian (LSB first)</li>
+<li>有时出现在文件的头部</li>
+<li>字节顺序标志</li>
+<li>对UTF-16, UTF-32编码的文件尤其重要<ul>
+<li>大端法Big Endian (高位在前)</li>
+<li>小短法Little Endian (低位在前)</li>
 </ul>
 </li>
-<li>UTF-8 BOM just says &quot;I am UTF-8&quot;<ul>
-<li>popular in Windows</li>
+<li>UTF-8 BOM 就是告诉你一下:&quot;我是UTF-8文件&quot;<ul>
+<li>Windows中很流行</li>
 </ul>
 </li>
 </ul>
 </div>
-<div class="slide" id="detecting-the-bom">
-<h1>Detecting the BOM</h1>
+<div class="slide" id="id36">
+<h1>检测BOM</h1>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">&gt;&gt;&gt;</span> f <span style="color: #666666">=</span> <span style="color: #008000">open</span>(<span style="color: #BA2121">&#39;/tmp/ivan_utf16.txt&#39;</span>,<span style="color: #BA2121">&#39;r&#39;</span>)
 <span style="color: #666666">&gt;&gt;&gt;</span> sample <span style="color: #666666">=</span> f<span style="color: #666666">.</span>read(<span style="color: #666666">4</span>)
 <span style="color: #666666">&gt;&gt;&gt;</span> sample
 <span style="color: #BA2121">&#39;</span><span style="color: #BB6622; font-weight: bold">\xff\xfe</span><span style="color: #BA2121">I</span><span style="color: #BB6622; font-weight: bold">\x00</span><span style="color: #BA2121">&#39;</span>
 </pre></div>
 <ul class="simple">
-<li>BOM can be 2, 3, or 4 bytes long</li>
+<li>BOM 可能有 2, 3,或 4 bytes 长</li>
 </ul>
 </div>
-<div class="slide" id="id20">
-<h1>Detecting the BOM</h1>
+<div class="slide" id="id37">
+<h1>检测BOM</h1>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">&gt;&gt;&gt;</span> <span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">codecs</span>
 <span style="color: #666666">&gt;&gt;&gt;</span> (sample<span style="color: #666666">.</span>startswith(codecs<span style="color: #666666">.</span>BOM_UTF16_LE) <span style="color: #AA22FF; font-weight: bold">or</span>
 <span style="color: #666666">...</span>  sample<span style="color: #666666">.</span>startswith(codecs<span style="color: #666666">.</span>BOM_UTF16_BE))
@@ -993,76 +991,73 @@ IS ASCII</p>
 <span style="color: #008000">False</span>
 </pre></div>
 </div>
-<div class="slide" id="do-i-have-to-remove-the-bom">
-<h1>Do I have to remove the BOM?</h1>
+<div class="slide" id="id38">
+<h1>我需要删掉BOM吗</h1>
 <ul class="incremental simple">
-<li>maybe</li>
-<li>decoding UTF-16 removes the BOM automatically</li>
-<li>but not UTF-8<ul>
-<li><em>unless</em> you say <tt class="docutils literal"><span class="pre">s.decode('utf-8-sig')</span></tt><ul>
-<li>available since Python 2.5</li>
+<li>也许吧</li>
+<li>解码UTF-16时自动删掉BOM</li>
+<li>但UTF-8不是这样<ul>
+<li><em>除非</em> 你这么写 <tt class="docutils literal"><span class="pre">s.decode('utf-8-sig')</span></tt><ul>
+<li>Python 2.5及以后都是这样</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </div>
-<div class="slide" id="how-do-you-guess-an-encoding">
-<h1>How do you guess an encoding?</h1>
+<div class="slide" id="id39">
+<h1>给你一段字节,如何判断其编码?</h1>
 <ul class="incremental simple">
-<li>There is no reliable way to guess an encoding</li>
-<li>BOM gives you a clue</li>
-<li><tt class="docutils literal"><span class="pre">Content-type</span></tt> header usually contains <tt class="docutils literal"><span class="pre">charset=...</span></tt></li>
-<li>chardet module tries<ul>
-<li><a class="reference external" href="http://chardet.feedparser.org/">http://chardet.feedparser.org/</a></li>
-<li>port of Mozilla encoding detection</li>
-</ul>
-</li>
-<li>UTF-8 is your best guess</li>
+<li>不幸的是,没有一个可靠的方法能这么做</li>
+<li>BOM给你了线索</li>
+<li>HTTP传输中的``Content-type``头一般会告诉你使用了哪个字符集,就像&quot;charset=...&quot;</li>
+<li>有专门判断字符编码的模块
+- <a class="reference external" href="http://chardet.feedparser.org/">http://chardet.feedparser.org/</a>
+- 是Mozilla编码检测的一部分(原文port of Mozilla encoding detection)</li>
 </ul>
 </div>
-<div class="slide" id="summary-of-problems">
-<h1>Summary of problems</h1>
+<div class="slide" id="id40">
+<h1>总结问题</h1>
 <ul class="incremental simple">
-<li>default Python 2 encoding is 'ascii'</li>
-<li>files might contain a BOM</li>
-<li>not all Python 2 internals support Unicode</li>
-<li>You can't reliably guess an encoding</li>
+<li>Python 2默认编码是ASCII</li>
+<li>文件可能包含一个BOM头</li>
+<li>并不是所有的Python 2 内部模块支持Unicode</li>
+<li>无法可靠判断一串字符的编码格式</li>
 </ul>
 </div>
-<div class="slide" id="summary-of-solutions">
-<h1>Summary of solutions</h1>
+<div class="slide" id="id41">
+<h1>总结问题</h1>
 <ul class="incremental simple">
-<li>Decode early, Unicode everywhere, encode late</li>
-<li>write wrappers for modules that don't like Unicode</li>
-<li>Always put Unicode in unit tests</li>
-<li>UTF-8 is the best guess for an encoding<ul>
-<li>use the BOM to guess encodings</li>
-<li>or use chardet.detect()</li>
+<li>早解码,多用unicode,晚编码</li>
+<li>封装那些不支持unicode的模块,自己搞定</li>
+<li>单元测试不要少了unicode</li>
+<li>要是猜测编码格式,先猜UTF-8<ul>
+<li>使用BOM头检测编码格式</li>
+<li>或者使用专业模块chardet.detect()</li>
 </ul>
 </li>
 </ul>
 </div>
-<div class="slide" id="unicode-in-python-3">
-<h1>Unicode in Python 3</h1>
+<div class="slide" id="python-3unicode">
+<h1>Python 3中的Unicode</h1>
 <ul class="incremental simple">
-<li>they fixed Unicode!</li>
-<li><tt class="docutils literal">&lt;type 'str'&gt;</tt> is a Unicode object</li>
-<li>separate <tt class="docutils literal">&lt;type 'bytes'&gt;</tt> type</li>
-<li>all builtin modules support Unicode</li>
-<li>no more <tt class="docutils literal">u'text'</tt> syntax</li>
+<li>解决了Python2中存在的unicode的问题!</li>
+<li><tt class="docutils literal">&lt;type 'str'&gt;</tt> 就是一个unicode对象</li>
+<li>分离开了 <tt class="docutils literal">&lt;type 'bytes'&gt;</tt> 类型</li>
+<li>所有内置模块都支持Unicode</li>
+<li>不再使用``u'text'`` 这个语法</li>
 </ul>
 </div>
-<div class="slide" id="id21">
-<h1>Unicode in Python 3</h1>
+<div class="slide" id="id42">
+<h1>Python 3中的Unicode</h1>
 <ul class="incremental simple">
-<li><tt class="docutils literal">open()</tt> takes an encoding argument, like <tt class="docutils literal">codecs.open()</tt></li>
-<li>default encoding is UTF-8 not ASCII<ul>
+<li><tt class="docutils literal">open()</tt> 接受一个编码参数, 就像 <tt class="docutils literal">codecs.open()</tt></li>
+<li>默认编码格式是UTF-8 而非 ASCII<ul>
 <li>woo!</li>
 </ul>
 </li>
-<li>Tries to guess the file encoding<ul>
-<li>You will still need to declare encodings</li>
+<li>依旧需要猜测文件编码格式<ul>
+<li>依旧需要声明编码格式</li>
 </ul>
 </li>
 </ul>
@@ -1070,6 +1065,7 @@ IS ASCII</p>
 <div class="slide" id="fin">
 <h1>Fin</h1>
 <ul class="incremental simple">
+<li>谢谢!</li>
 <li>Thanks Leapfrog Online</li>
 <li>Stop by our booth...<ul>
 <li>we're hiring Python devs</li>
